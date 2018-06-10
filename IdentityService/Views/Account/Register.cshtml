@@ -1,0 +1,89 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+@using IdentityService.Models
+@model IdentityService.Models.AccountViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Novo Usuário";
+}
+
+<div class="container-fluid">
+    @{
+        var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        if (loginProviders.Count != 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" data-background-color="purple">
+                            <h4 class="title">Login Externo</h4>
+                            <p class="category">Utilize suas contas existentes com os serviços abaixo</p>
+                        </div>
+                        <div class="card-content">
+                            <section>
+                                <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                                    <div>
+                                        <p>
+                                            @foreach (var provider in loginProviders)
+                                            {
+                                                <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                                            }
+                                        </p>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="purple">
+                    <h4 class="title">@ViewBag.Title</h4>
+                    <p class="category">Crie sua conta com seu e-mail</p>
+                </div>
+                <div class="card-content">
+                    <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" class="form-control"/>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" class="form-control"/>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" class="form-control"/>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input asp-for="Password" class="form-control"/>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword"></label>
+                            <input asp-for="ConfirmPassword" class="form-control"/>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary pull-right">Salvar</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

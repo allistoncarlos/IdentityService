@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  identityservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - USE_SECRETS=true
+    ports:
+      - "80"
+    volumes:
+      - $APPDATA\Microsoft\UserSecrets\ff1a56b8-c5a3-4c4a-8202-0e2ffa9c6a3f:C:\UserSecrets

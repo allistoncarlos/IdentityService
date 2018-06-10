@@ -1,0 +1,33 @@
+﻿@{ 
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                
+                <div class="card-content">
+                    <h2>Minha Conta</h2>
+					<h4>Altere as configurações da sua conta</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div>
+        <div class="row">
+            <div class="col-md-3">
+                @await Html.PartialAsync("_ManageNav")
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
+        

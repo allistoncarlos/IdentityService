@@ -1,0 +1,33 @@
+﻿@using IdentityService.Models
+
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+
+
+<li class="dropdown">
+    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="material-icons">person</i>
+        <p class="hidden-lg hidden-md">
+			Conta de Usuário
+		</p>
+    </a>
+    <ul class="dropdown-menu">
+		@if (SignInManager.IsSignedIn(User))
+        {
+            <li>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Minha Conta (@UserManager.GetUserName(User))</a>
+            </li>
+            <li>
+				<form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="">
+                    <button type="submit" class="btn btn-primary btn-simple">Sair</button>
+				</form>	
+            </li>
+        }
+        else
+        {
+            <li><a asp-area="" asp-controller="Account" asp-action="Register">Cadastre-se</a></li>
+            <li><a asp-area="" asp-controller="Account" asp-action="Login">Entrar</a></li>
+        }
+    </ul>
+</li>

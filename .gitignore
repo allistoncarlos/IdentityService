@@ -1,0 +1,10 @@
+
+IdentityService/bin/
+
+IdentityService/obj/
+
+IdentityService/tempkey\.rsa
+
+obj/
+
+\.vs/

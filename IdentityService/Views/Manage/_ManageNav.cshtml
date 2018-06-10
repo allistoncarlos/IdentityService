@@ -1,0 +1,17 @@
+﻿@using IdentityService.Models
+@using IdentityService.Views.Manage
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<ul class="nav nav-pills nav-stacked">
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Perfil</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Senha</a></li>
+    @if (hasExternalLogins)
+    {
+        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">Logins Externos</a></li>
+    }
+    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Autenticação de Dois Fatores</a></li>
+</ul>
+

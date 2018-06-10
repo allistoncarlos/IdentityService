@@ -1,0 +1,19 @@
+version: '3.6'
+
+services:
+  identityservice:
+    container_name: IdentityService
+    image: identityservice
+    hostname: identityservice
+    build:
+      context: .
+      dockerfile: IdentityService\Dockerfile
+    depends_on:
+      - identityservicemongodb
+
+  identityservicemongodb:
+    container_name: IdentityServiceDB
+    image: mongo:3.6-windowsservercore
+    hostname: identityservicemongodb
+    ports:
+      - 27017:27017
