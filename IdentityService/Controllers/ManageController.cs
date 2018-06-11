@@ -22,7 +22,7 @@ namespace IdentityService.Controllers
 		private readonly UserManager<ApplicationUser> userManager;
 		private readonly SignInManager<ApplicationUser> signInManager;
 		private readonly IEmailSender emailSender;
-		private readonly ILogger logger;
+        private readonly ILogger<ManageController> logger;
 		private readonly UrlEncoder urlEncoder;
 	    private readonly IConfiguration configuration;
 
@@ -32,7 +32,7 @@ namespace IdentityService.Controllers
 		  UserManager<ApplicationUser> userManager,
 		  SignInManager<ApplicationUser> signInManager,
 		  IEmailSender emailSender,
-		  ILogger logger,
+          ILogger<ManageController> logger,
 		  UrlEncoder urlEncoder,
           IConfiguration configuration)
 		{

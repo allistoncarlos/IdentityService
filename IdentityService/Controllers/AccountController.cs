@@ -20,7 +20,7 @@ namespace IdentityService.Controllers
 		private readonly UserManager<ApplicationUser> userManager;
 		private readonly SignInManager<ApplicationUser> signInManager;
 		private readonly IEmailSender emailSender;
-		private readonly ILogger logger;
+        private readonly ILogger<AccountController> logger;
 
 		public AccountController(
 			UserManager<ApplicationUser> userManager,

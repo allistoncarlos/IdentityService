@@ -26,7 +26,7 @@ namespace IdentityService.Controllers
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IResourceStore resourceStore,
-            ILogger logger)
+            ILogger<ConsentController> logger)
         {
             consent = new ConsentService(interaction, clientStore, resourceStore, logger);
         }
