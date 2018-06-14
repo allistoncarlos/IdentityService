@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
@@ -179,12 +178,35 @@ namespace IdentityService
                 clients.Add(webClient);
             }
 
+            if (!string.IsNullOrEmpty(Configuration["Authentication:UnauthorizedClient:ClientId"]) &&
+                !string.IsNullOrEmpty(Configuration["Authentication:UnauthorizedClient:ClientSecret"]))
+            {
+                var unauthorizedClient = new Client
+                {
+                    ClientId = Configuration["Authentication:UnauthorizedClient:ClientId"],
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                    ClientSecrets =
+                    {
+                        new Secret(Configuration["Authentication:UnauthorizedClient:ClientSecret"].Sha256())
+                    },
+
+                    AllowedScopes = { Configuration["APIName"] },
+                    AlwaysSendClientClaims = true
+                };
+
+                clients.Add(unauthorizedClient);
+            }
+
             if (!Convert.ToBoolean(Configuration["APIEnableScopePerClaim"])) return clients;
 
             if (string.IsNullOrEmpty(Configuration["APIScopes"])) return clients;
 
             foreach (var client in clients)
             {
+                if (client.AllowedGrantTypes.Contains(GrantType.ClientCredentials))
+                    continue;
+
                 var scopes = Configuration["APIScopes"]?.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var scope in scopes)

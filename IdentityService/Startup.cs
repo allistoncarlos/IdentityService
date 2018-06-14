@@ -8,6 +8,7 @@ using IdentityService.IdentityServerProviders.Interfaces;
 using IdentityService.IdentityServices;
 using IdentityService.Models;
 using IdentityService.Repository;
+using IdentityService.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -107,6 +108,8 @@ namespace IdentityService
 
             if (usesGoogle)
                 services.AddTransient<IGoogleAuthProvider, GoogleAuthProvider<ApplicationUser>>();
+
+            services.AddTransient<ICustomTokenRequestValidator, DefaultClientClaimsAdder>();
             #endregion
 
             #region Session
