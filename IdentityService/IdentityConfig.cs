@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
@@ -192,7 +191,8 @@ namespace IdentityService
                         new Secret(Configuration["Authentication:UnauthorizedClient:ClientSecret"].Sha256())
                     },
 
-                    AllowedScopes = { Configuration["APIName"], "offline_access" }
+                    AllowedScopes = { Configuration["APIName"] },
+                    AlwaysSendClientClaims = true
                 };
 
                 clients.Add(unauthorizedClient);
@@ -204,6 +204,9 @@ namespace IdentityService
 
             foreach (var client in clients)
             {
+                if (client.AllowedGrantTypes.Contains(GrantType.ClientCredentials))
+                    continue;
+
                 var scopes = Configuration["APIScopes"]?.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var scope in scopes)
