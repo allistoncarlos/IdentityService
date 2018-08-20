@@ -7,13 +7,15 @@ services:
     hostname: identityservice
     build:
       context: .
-      dockerfile: IdentityService\Dockerfile
+      dockerfile: IdentityService/Dockerfile
     depends_on:
       - identityservicemongodb
+    ports:
+      - 3004:80
 
   identityservicemongodb:
     container_name: IdentityServiceDB
-    image: mongo:3.6-windowsservercore
+    image: mongo:latest
     hostname: identityservicemongodb
     ports:
       - 27017:27017

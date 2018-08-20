@@ -20,24 +20,12 @@ namespace IdentityService
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath);
-
-            builder = builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-
-            if (env.IsDevelopment() && Convert.ToBoolean(Configuration["USE_SECRETS"]))
-            {
-                builder = builder.AddJsonFile(@"C:\UserSecrets\secrets.json");
-                Configuration = builder.Build();
-            }
-        }
-
         public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

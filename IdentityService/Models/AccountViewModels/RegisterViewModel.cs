@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IdentityService.Models.AccountViewModels
 {
@@ -28,7 +27,5 @@ namespace IdentityService.Models.AccountViewModels
         [Display(Name = "Confirmação de Senha")]
         [Compare("Password", ErrorMessage = "A Senha e a Confirmação de Senha não coincidem")]
         public string ConfirmPassword { get; set; }
-
-        public Dictionary<string, string> Claims { get; set; }
     }
 }

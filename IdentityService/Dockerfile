@@ -1,14 +1,20 @@
-FROM microsoft/dotnet:2.1-sdk  AS builder
-WORKDIR /sln/IdentityService
+FROM microsoft/dotnet:2.1.2-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM microsoft/dotnet:2.1.302-sdk AS build
+WORKDIR /src
+COPY *.sln ./
+COPY IdentityService.csproj IdentityService/
+RUN dotnet restore
 COPY . .
+WORKDIR /src/IdentityService
+RUN dotnet build -c Release -o /app
 
-RUN dotnet restore IdentityService.csproj
-RUN dotnet build -c Release --no-restore
+FROM build AS publish
+RUN dotnet publish -c Release -o /app
 
-COPY . .
-RUN dotnet publish --output /sln/ --configuration Release
-
-FROM microsoft/dotnet:2.1-sdk 
-WORKDIR /sln
-COPY --from=builder /sln .
-ENTRYPOINT ["dotnet", "IdentityService.dll"]]
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "IdentityService.dll"]

@@ -19,6 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="APIControllers\" />
+    <Compile Remove="APIControllers\AccountController.cs" />
   </ItemGroup>
 </Project>
